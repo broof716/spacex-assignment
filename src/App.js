@@ -41,7 +41,7 @@ function GetLaunches() {
                         className="card-img"
                         className="center"
                         src={launch.links.flickr_images}
-                        alt=""
+                        alt="SpaceX Launches"
                       />
                       <a
                         href={launch.links.video_link}
