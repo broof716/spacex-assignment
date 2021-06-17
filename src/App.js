@@ -13,7 +13,7 @@ const client = new ApolloClient({
 });
 
 function GetLaunches() {
-  const { loading, data } = useQuery(gql`
+  const { loading, error, data } = useQuery(gql`
     {
       launchesPast(limit: 10) {
         mission_name
@@ -25,43 +25,43 @@ function GetLaunches() {
       }
     }
   `);
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error :(</p>;
 
-  return loading
-    ? "Loading..."
-    : data.launchesPast.map((launch) => (
-        <div className="spacex">
-          <div className="container">
-            <div className="card bg-danger">
-              <div className="row">
-                <div className="col">
-                  <div className="card">
-                    <div className="card-body" key={launch.id}>
-                      <h4 className="card-title">{launch.mission_name}</h4>
-                      <img
-                        className="card-img"
-                        className="center"
-                        src={launch.links.flickr_images}
-                        alt="SpaceX Launches"
-                      />
-                      <a
-                        href={launch.links.video_link}
-                        className="btn btn-secondary streched-link"
-                        style={{
-                          display: "block",
-                          padding: "10px",
-                        }}
-                      >
-                        SpaceX Video Link
-                      </a>
-                      <p className="card-title">{launch.details}</p>
-                    </div>
-                  </div>
+  return data.launchesPast.map((launch) => (
+    <div className="spacex">
+      <div className="container">
+        <div className="card bg-danger">
+          <div className="row">
+            <div className="col">
+              <div className="card">
+                <div className="card-body" key={launch.id}>
+                  <h4 className="card-title">{launch.mission_name}</h4>
+                  <img
+                    className="card-img"
+                    className="center"
+                    src={launch.links.flickr_images}
+                    alt=""
+                  />
+                  <a
+                    href={launch.links.video_link}
+                    className="btn btn-secondary streched-link"
+                    style={{
+                      display: "block",
+                      padding: "10px",
+                    }}
+                  >
+                    SpaceX Video Link
+                  </a>
+                  <p className="card-title">{launch.details}</p>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      ));
+      </div>
+    </div>
+  ));
 }
 
 function App() {
